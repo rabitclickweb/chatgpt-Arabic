@@ -3528,12 +3528,12 @@ const translations = {
         let azureStyle = [];
         const supportSpe = !!(window.speechSynthesis && window.SpeechSynthesisUtterance);
         const isSafeEnv = location.hostname.match(/127.|localhost/) || location.protocol.match(/https:|file:/); // https或本地安全环境
-        const supportRec = !!window.webkitSpeechRecognition && isSafeEnv; // 是否支持语音识别输入
+        const supportRec = !!window.webkitSpeechRecognition && isSafeEnv; // ما إذا كان سيتم دعم إدخال التعرف على الصوت
         let recing = false;
-        let autoSendWord; // 自动发送关键词
-        let autoStopWord; // 自动停止关键词
-        let autoSendTime; // 自动发送延迟时间
-        let keepListenMic; // 保持监听麦克风
+        let autoSendWord; // إرسال الكلمات الرئيسية تلقائيا
+        let autoStopWord; // الكلمة الرئيسية للتوقف التلقائي
+        let autoSendTime; // وقت تأخير الإرسال التلقائي
+        let keepListenMic; // استمر في مراقبة الميكروفون
         let autoSendTimer;
         let resetRecRes;
         let toggleRecEv;
@@ -4129,7 +4129,7 @@ const translations = {
         const initVoiceSetting = (voices) => {
             let isOnline = existVoice >= 2;
             let voicesEle = document.getElementById("preSetSpeech");
-            // 支持中文和英文
+            // دعم العربية والإنجليزية
             voices = isOnline ? voices.filter(item => item.Locale.match(/^(zh-|ar-)/)) : voices.filter(item => item.lang.match(/^(zh-|ar-)/));
             if (isOnline) {
                 voices.map(item => {
@@ -4139,13 +4139,13 @@ const translations = {
             }
             voices.sort((a, b) => {
                 if (a.lang.slice(0, 2) === b.lang.slice(0, 2)) {
-                    if (a.lang.slice(0, 2) === "zh") {
-                        return (a.lang === b.lang) ? 0 : (a.lang > b.lang) ? 1 : -1; // zh-CN 在前
+                    if (a.lang.slice(0, 2) === "ar") {
+                        return (a.lang === b.lang) ? 0 : (a.lang > b.lang) ? 1 : -1; // ar أولا
                     } else {
                         return 0
                     }
                 }
-                return (locale === "zh" ? (a.lang < b.lang) : (a.lang > b.lang)) ? 1 : -1; // 中文UI，则中文"z"在前
+                return (locale === "ar" ? (a.lang < b.lang) : (a.lang > b.lang)) ? 1 : -1; // واجهة المستخدم لبعربية، الحرف "z" العربي يأتي أولاً
             });
             voices.map(item => {
                 if (item.name.match(/^(Google |Microsoft )/)) {
@@ -4363,28 +4363,28 @@ const translations = {
             "emoji": translations[locale]["emojiText"],
             "image": translations[locale]["imageText"]
         };
-        let modelVersion; // 模型版本
-        let apiHost; // api反代地址
-        let apiSelects = []; // api地址列表
-        let customAPIKey; // 自定义apiKey
-        let systemRole; // 自定义系统角色
-        let roleNature; // 角色性格
-        let roleTemp; // 回答质量
-        let convWidth = []; // 会话宽度，0:窗口宽度，1:全屏宽度
-        let textSpeed; // 打字机速度，越小越快
-        let contLen; // 连续会话长度，默认25，对话包含25条上下文信息。设置为0即关闭连续会话
-        let enableLongReply; // 是否开启长回复，默认关闭，开启可能导致api费用增加。
+    let modelVersion; // نسخة النموذج
+    let apiHost; // عنوان انعكاسي لواجهة برمجة التطبيقات
+    let apiSelects = []; // قائمة عناوين واجهة برمجة التطبيقات
+    let customAPIKey; // مفتاح API المخصص
+    let systemRole; // دور النظام المخصص
+    let roleNature; // شخصية الدور
+    let roleTemp; // جودة الإجابة
+    let convWidth = []; // عرض الحوار، 0: عرض النافذة، 1: عرض الشاشة بالكامل
+    let textSpeed; // سرعة الطابعة، كلما كانت القيمة أصغر كانت السرعة أكبر
+    let contLen; // طول الحوار المستمر، الافتراضي 25، تعيينه إلى 0 يعني إيقاف الحوار المستمر
+    let enableLongReply; // هل تم تمكين الردود الطويلة؟، تمكينه قد يؤدي إلى زيادة تكلفة واجهة برمجة التطبيقات.
         let longReplyFlag;
         let voiceIns; // Audio or SpeechSynthesisUtterance
         const isFirefox = !!navigator.userAgent.match(/firefox/i);
-        const supportMSE = !!window.MediaSource && !isFirefox; // 是否支持MSE（除了ios应该都支持）
+        const supportMSE = !!window.MediaSource && !isFirefox; //هل يدعم MSE (يجب أن يدعمه الجميع باستثناء نظام التشغيل ios)）
         const voiceMIME = "audio/mpeg";
         const voiceFormat = "audio-24khz-48kbitrate-mono-mp3";
         const voicePreLen = 130;
         const voiceSuffix = ".mp3";
-        let userAvatar; // 用户头像
+        let userAvatar; // الصوره الشخصيه
         let customDarkOut;
-        let isCaseSearch; // 搜索是否区分大小写
+        let isCaseSearch; // هل حالة البحث حساسة؟
         let controller;
         let controllerId;
         const findOffsetTop = (ele, target) => { // target is positioned ancestor element
